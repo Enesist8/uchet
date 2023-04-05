@@ -39,26 +39,49 @@ namespace WpfApp13
             int sum = 0;
             for (int i = 0; i < money.Count; i++)
             {
-                sum += Convert.ToInt32(money[i][3]);
-                adada.Text = Convert.ToString(sum);
+                if (Convert.ToBoolean(money[i][4]))
+                {
+                    sum += Convert.ToInt32(money[i][3]);
+                }
+                else
+                {
+                    sum -= Convert.ToInt32(money[i][3]);
+                }
             }
+            adada.Text = Convert.ToString(sum);
+
             Griddds.ItemsSource = ggg.GetData();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
-
-
             int id = (int)re.SelectedValue;
-            ggg.InsertQuery(Name.Text, id, Summa.Text);
+            int a;
+            if (Convert.ToInt32(Summa.Text) < 0)
+            {
+                int b = Convert.ToInt32(Summa.Text) * (-1);
+                Summa.Text = Convert.ToString(b);
+                ggg.InsertQuery(Name.Text, id, Summa.Text, false);
+            }
+            else
+            {
+                ggg.InsertQuery(Name.Text, id, Summa.Text, true);
+            }
             var money = ggg.GetData();
             int sum = 0;
             for (int i = 0; i < money.Count; i++)
             {
-                sum += Convert.ToInt32(money[i][3]);
-                adada.Text = Convert.ToString(sum);
+                if (Convert.ToBoolean(money[i][4]))
+                {
+                    sum += Convert.ToInt32(money[i][3]);
+                }
+                else
+                {
+                    sum -= Convert.ToInt32(money[i][3]);
+                }
             }
+            adada.Text = Convert.ToString(sum);
+
             Griddds.ItemsSource = ggg.GetData();
         }
     
@@ -67,18 +90,35 @@ namespace WpfApp13
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             var id = Griddds.SelectedItem as DataRowView;
-            ggg.UpdateQuery(Name.Text, (int)re.SelectedValue, Summa.Text, (int)id.Row[0]);
-            Griddds.ItemsSource = ggg.GetData(); 
+            if (Convert.ToInt32(Summa.Text) < 0)
+            {
+                int b = Convert.ToInt32(Summa.Text) * (-1);
+                Summa.Text = Convert.ToString(b);
+                ggg.UpdateQuery(Name.Text, (int)re.SelectedValue, Summa.Text, false, (int)id.Row[0]);
+            }
+            else
+            {
+                ggg.UpdateQuery(Name.Text, (int)re.SelectedValue, Summa.Text, true, (int)id.Row[0]);
+            }
             var money = ggg.GetData();
             int sum = 0;
             for (int i = 0; i < money.Count; i++)
             {
-                sum += Convert.ToInt32(money[i][3]);
-                adada.Text = Convert.ToString(sum);
+                if (Convert.ToBoolean(money[i][4]))
+                {
+                    sum += Convert.ToInt32(money[i][3]);
+                }
+                else
+                {
+                    sum -= Convert.ToInt32(money[i][3]);
+                }
             }
+            adada.Text = Convert.ToString(sum);
+
             Griddds.ItemsSource = ggg.GetData();
         }
-    
+
+
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
